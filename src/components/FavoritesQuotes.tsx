@@ -6,7 +6,10 @@ const FavoritesQuotes = () => {
   const { favorites } = useRandomQuote();
 
   return (
-    <section className="text-gray-600 body-font overflow-hidden">
+    <section className="text-gray-600 body-font overflow-hidden container px-24 mx-auto">
+      <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+        Favorite Quotes
+      </h1>
       <div className="container px-5 py-24 mx-auto">
         <div className="-my-8 divide-y-2 divide-gray-100">
           {favorites.map((favorite) => (
