@@ -3,15 +3,19 @@
 import useRandomQuote from "../hooks/useRandomQuote";
 
 const FavoritesQuotes = () => {
-  const { favorites } = useRandomQuote();
+  const { favorites, removeQuoteFromFavorites } = useRandomQuote();
 
   return (
     <section className="text-gray-600 body-font overflow-hidden container px-24 mx-auto">
-      <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-        Favorite Quotes
+      <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        Favorite Quotes ({favorites?.length})
       </h1>
       <div className="container px-5 py-24 mx-auto">
-        <div className="-my-8 divide-y-2 divide-gray-100">
+        <div
+          //   className="-my-8 divide-y-2 divide-gray-100"
+          className="max-h-80 overflow-y-scroll -my-8 divide-y-2 divide-gray-100"
+          style={{ scrollBehavior: "smooth" }}
+        >
           {favorites.map((favorite) => (
             <div
               key={favorite._id}
@@ -30,6 +34,14 @@ const FavoritesQuotes = () => {
                   {favorite.content}
                 </h2>
                 <p className="leading-relaxed">{favorite.tags}</p>
+              </div>
+              <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
+                <button
+                  onClick={() => removeQuoteFromFavorites(favorite._id)}
+                  className="ml-2 text-red-500 hover:text-red-700"
+                >
+                  REMOVE
+                </button>
               </div>
             </div>
           ))}

@@ -1,6 +1,7 @@
 /** @format */
 
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 type QuoteType = {
   _id: string;
@@ -33,11 +34,21 @@ function useRandomQuote(apiUrl = "https://api.quotable.io/random") {
   };
 
   const addToFavorites = () => {
-    quote && setFavorites([...favorites, { ...quote }]);
-    localStorage.setItem(
-      "favoriteQuotes",
-      JSON.stringify([...favorites, { ...quote }])
-    );
+    if (quote && !favorites.some((fav) => fav._id === quote._id)) {
+      const updatedFavorites = [...favorites, { ...quote }];
+      setFavorites(updatedFavorites);
+      localStorage.setItem("favoriteQuotes", JSON.stringify(updatedFavorites));
+      toast.success("Quote added to favorites successfully!");
+    } else {
+      toast.error("Quote already exists in favorites!");
+    }
+  };
+
+  const removeQuoteFromFavorites = (quoteId: string) => {
+    const updatedFavorites = favorites.filter((fav) => fav._id !== quoteId);
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favoriteQuotes", JSON.stringify(updatedFavorites));
+    toast.success("Quote removed from favorites successfully!");
   };
 
   // Load favorites from local storage on mount
@@ -48,7 +59,14 @@ function useRandomQuote(apiUrl = "https://api.quotable.io/random") {
     }
   }, []);
 
-  return { quote, isLoading, fetchQuote, addToFavorites, favorites };
+  return {
+    quote,
+    isLoading,
+    fetchQuote,
+    addToFavorites,
+    removeQuoteFromFavorites,
+    favorites,
+  };
 }
 
 export default useRandomQuote;

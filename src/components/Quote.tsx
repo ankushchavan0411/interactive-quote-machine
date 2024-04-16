@@ -15,13 +15,13 @@ export default function Quote() {
       <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
         {isLoading ? (
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-2xl">
               Loading quote...
             </h1>
           </div>
         ) : (
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-2xl">
               {quote?.content}
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
