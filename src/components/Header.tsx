@@ -1,4 +1,5 @@
 /** @format */
+import { FaQuoteLeft } from "react-icons/fa";
 
 export default function Header() {
   return (
@@ -8,10 +9,11 @@ export default function Header() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="#" className="-m-1.5 p-1.5 flex justify-center items-center">
             <span className="sr-only">Your Company</span>
-            <span className="ml-3 text-xl font-bold">
-              Interactive Quote Machine
+            <FaQuoteLeft className="text-red-700 w-8 h-8" />
+            <span className="ml-3 text-xl font-bold text-red-600">
+              Interactive Quote App
             </span>
           </a>
         </div>
