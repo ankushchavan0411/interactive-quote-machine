@@ -1,11 +1,14 @@
 /** @format */
 
 import { useEffect } from "react";
-import useRandomQuote from "../hooks/useRandomQuote";
+import { QuoteTypes } from "../@app-Interface";
 
-export default function Quote() {
-  const { quote, isLoading, fetchQuote, addToFavorites } = useRandomQuote();
-
+export default function Quote({
+  quote,
+  isLoading,
+  fetchQuote,
+  addToFavorites,
+}: QuoteTypes) {
   useEffect(() => {
     fetchQuote();
   }, []);

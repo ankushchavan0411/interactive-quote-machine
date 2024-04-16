@@ -2,17 +2,7 @@
 
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
-type QuoteType = {
-  _id: string;
-  content: string;
-  author: string;
-  tags: string[];
-  authorSlug: string;
-  length: number;
-  dateAdded: string;
-  dateModified: string;
-};
+import { QuoteType } from "../@app-Interface";
 
 function useRandomQuote(apiUrl = "https://api.quotable.io/random") {
   const [quote, setQuote] = useState<QuoteType | null>(null);
