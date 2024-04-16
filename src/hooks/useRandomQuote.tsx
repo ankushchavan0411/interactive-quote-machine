@@ -1,28 +1,54 @@
 /** @format */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+type QuoteType = {
+  _id: string;
+  content: string;
+  author: string;
+  tags: string[];
+  authorSlug: string;
+  length: number;
+  dateAdded: string;
+  dateModified: string;
+};
 
 function useRandomQuote(apiUrl = "https://api.quotable.io/random") {
-  const [quote, setQuote] = useState("");
-  const [author, setAuthor] = useState("");
-  const [isLoading, setIsLoading] = useState(true); // Added for loading state
+  const [quote, setQuote] = useState<QuoteType | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [favorites, setFavorites] = useState<QuoteType[]>([]);
 
   const fetchQuote = async () => {
-    setIsLoading(true); // Set loading to true before fetching
+    setIsLoading(true);
 
     try {
       const response = await fetch(apiUrl);
       const data = await response.json();
-      setQuote(data.content);
-      setAuthor(data.author);
+      setQuote(data);
     } catch (error) {
       console.error("Error fetching quote:", error);
     } finally {
-      setIsLoading(false); // Set loading to false after fetching (or on error)
+      setIsLoading(false);
     }
   };
 
-  return { quote, author, isLoading, fetchQuote };
+  const addToFavorites = () => {
+    quote && setFavorites([...favorites, { ...quote }]);
+    localStorage.setItem(
+      "favoriteQuotes",
+      JSON.stringify([...favorites, { ...quote }])
+    );
+  };
+
+  // Load favorites from local storage on mount
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem("favoriteQuotes");
+    if (storedFavorites) {
+      setFavorites(JSON.parse(storedFavorites));
+    }
+  }, []);
+
+  return { quote, isLoading, fetchQuote, addToFavorites, favorites };
 }
 
 export default useRandomQuote;
